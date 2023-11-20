@@ -4,7 +4,7 @@ export const features = {
   data: [
     {
       heading: 'Seamless Integration',
-      text: "Integrate with ease. Seamlessly add GetMoreReviews to your e-commerce website, connect with popular messaging platforms, and enjoy compatibility with various e-commerce platforms like Shopify, WooCommerce, and Magento.",
+      text: "Integrate with ease. Seamlessly add Gram Circle to your e-commerce website, connect with popular messaging platforms, and enjoy compatibility with various e-commerce platforms like Shopify, WooCommerce, and Magento.",
       image: 'path/to/image1.jpg',
     },
     {

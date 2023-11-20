@@ -47,7 +47,7 @@ export const Footer = () => {
           </a>
         </div>
         <div className="mt-8  md:order-1 md:mt-0 ">
-          <p className="text-center text-base text-white">&copy; getmorereviews.</p>
+          <p className="text-center text-base text-white">&copy; Gram Circle.</p>
         </div>
       </div>
     </footer>

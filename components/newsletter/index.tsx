@@ -10,7 +10,7 @@ export default function NewsLetter() {
       id="Newsletter"
       header={'Join Our Newsletter'}
       subheader={
-        'Stay informed with the latest updates and news from getmorereviews.com. Subscribe to our newsletter!'
+        'Stay informed with the latest updates and news from Gram Circle. Subscribe to our newsletter!'
       }>
       <div className="flex items-center justify-center mb-10">
         <input

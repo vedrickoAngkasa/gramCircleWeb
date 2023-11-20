@@ -88,7 +88,7 @@ export default function Header() {
     return (
         <div className="bg-gray-0 w-full flex justify-between items-center py-10 border-1 border-black px-10">
             <div className="flex items-center font-logo text-xl text-black">
-                <Link href="/admin/brands">www.GetMyTreat.com</Link>
+                <Link href="/admin/brands">www.gramcircle.ai</Link>
             </div>
             <div className="flex items-center ">
                 <Popover>

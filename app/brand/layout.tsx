@@ -9,7 +9,7 @@ import Header from '@/components/header'
 const font = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'www.GetMyTreat.com',
+  title: 'www.gramcircle.ai',
   description: 'Amazaon review writer',
 }
 
