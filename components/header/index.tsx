@@ -6,6 +6,7 @@ import { PlusSquare, LogOut, UserCircle2, Settings } from 'lucide-react';
 import { getAuth } from 'firebase/auth';
 import { initFirebase } from '@/lib/db'
 import Link from 'next/link'
+import { Button } from '../ui/button';
 
 import {
     Popover,
@@ -90,24 +91,25 @@ export default function Header() {
             <div className="flex items-center font-logo text-xl text-black">
                 <Link href="/admin/brands">www.gramcircle.ai</Link>
             </div>
-            <div className="flex items-center ">
-                <Popover>
-                    <PopoverTrigger asChild>
-                        <UserCircle2 size={28} className='cursor-pointer' />
-                    </PopoverTrigger>
-                    <PopoverContent className="w-80">
-                        <LogoutPopup
-                            user={{
-                                photoURL: user?.photoURL || '',
-                                email: user?.email || ''
-                            }}
-                            onLogout={logout}
-                            onClose={() => { alert('logout') }}
-                        />
-                    </PopoverContent>
-                </Popover>
+            {user ? (
 
-            </div>
+                <div className="flex items-center ">
+                    <Popover>
+                        <PopoverTrigger asChild>
+                            <UserCircle2 size={28} className='cursor-pointer' />
+                        </PopoverTrigger>
+                        <PopoverContent className="w-80">
+                            <LogoutPopup
+                                user={{
+                                    photoURL: user?.photoURL || '',
+                                    email: user?.email || ''
+                                }}
+                                onLogout={logout}
+                                onClose={() => { alert('logout') }}
+                            />
+                        </PopoverContent>
+                    </Popover>
+                </div>) : (<Button>Login</Button>)}
         </div>
     )
 }

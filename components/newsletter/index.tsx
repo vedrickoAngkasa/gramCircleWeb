@@ -17,9 +17,9 @@ export default function NewsLetter() {
           className="w-1/3 px-4 py-4 rounded-lg border border-gray-300 placeholder-gray-500 text-sm focus:outline-none focus:border-blue-500"
           type="email"
           placeholder="Enter your email"
-          {...register('email', { required: 'Email can not be left empty' })}
+
         />
-        <Button caption={'Subscribe'} className="px-12 mx-4" />
+        <Button className="px-12 mx-4" >Subscribe</Button>
       </div>
     </Section>
   );

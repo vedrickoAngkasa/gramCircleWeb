@@ -27,8 +27,8 @@ export const HeroImage = () => {
           </h1>
           <p className="text-base lg:text-lg mb-5 lg:mb-8 text-shadow-black">{hero.subHeading}</p>
           <div className="flex justify-start mt-4">
-            <Button caption="Create Bot" onClick={() => setShowModal(true)} />
-            <Button caption="Book Demo" style="grey" />
+            <Button onClick={() => setShowModal(true)} >Get Started</Button>
+            <Button >Book Demo</Button>
           </div>
         </div>
       </div>
