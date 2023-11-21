@@ -19,6 +19,8 @@ import {
     GoogleAuthProvider,
     signInWithPopup,
     signInWithEmailAndPassword,
+    FacebookAuthProvider,
+    TwitterAuthProvider,
     createUserWithEmailAndPassword,
     sendEmailVerification,
     updateProfile,
@@ -62,7 +64,7 @@ const SocialButton: React.FC<SocialButtonProps> = ({ provider, action, isLogin, 
                     width="25"
                     height="25"
                     viewBox="0 0 50 50"
-                    className="fill-current transition duration-300 ease-in-out hover:fill-blue"
+                    className="fill-current transition duration-200 ease-in-out hover:fill-blue"
                 >
                     {icon}
                 </svg>
@@ -71,9 +73,47 @@ const SocialButton: React.FC<SocialButtonProps> = ({ provider, action, isLogin, 
         </div>
     </Button>);
 
-const socialLogin = (provider: string): void => {
-    alert(`Logging in with ${provider}`);
+const signUpWithGoogle = () => {
+    var provider = new GoogleAuthProvider();
+    provider.setCustomParameters({
+        prompt: 'select_account',
+    });
+
+    signInWithPopup(auth, provider)
+        .then(result => {
+            console.log('User signed in successfully');
+            const user = result.user;
+            console.log(user);
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            if (credential) {
+                const token = credential.accessToken;
+                console.log(token);
+            }
+            if (onSignUp) {
+                onSignUp(true);
+            }
+            // The signed-in user info.
+            // IdP data available using getAdditionalUserInfo(result)
+            // ...
+        })
+        .catch(error => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            console.log(errorCode);
+            const errorMessage = error.message;
+            if (onError) {
+                onError(errorMessage);
+            }
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            // ...
+        });
 };
+
+
 
 export default function LoginDialog({ trigger, titles, loginControls, signUpControls, onSubmit, children, callWhenDone, callWhenError }: LoginDialogProps) {
     const app = initFirebase();
@@ -97,45 +137,89 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
         }
     };
 
-    const signUpWithGoogle = () => {
-        var provider = new GoogleAuthProvider();
-        provider.setCustomParameters({
-            prompt: 'select_account',
-        });
+    type SignUpCallback = (success: boolean) => void;
+    type ErrorCallback = (errorMessage: string) => void;
 
-        signInWithPopup(auth, provider)
-            .then(result => {
-                console.log('User signed in successfully');
-                const user = result.user;
-                console.log(user);
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                if (credential) {
-                    const token = credential.accessToken;
-                    console.log(token);
-                }
-                if (onSignUp) {
-                    onSignUp(true);
-                }
-                // The signed-in user info.
-                // IdP data available using getAdditionalUserInfo(result)
-                // ...
-            })
-            .catch(error => {
-                // Handle Errors here.
-                const errorCode = error.code;
-                console.log(errorCode);
-                const errorMessage = error.message;
-                if (onError) {
-                    onError(errorMessage);
-                }
-                // The email of the user's account used.
-                const email = error.customData.email;
-                // The AuthCredential type that was used.
-                const credential = GoogleAuthProvider.credentialFromError(error);
-                // ...
+    const signUpWithGoogle = async (onSignUp: SignUpCallback, onError: ErrorCallback): Promise<void> => {
+        alert('signup with google')
+        try {
+            const provider = new GoogleAuthProvider();
+            provider.setCustomParameters({
+                prompt: 'select_account',
             });
-    }
+
+            const result = await signInWithPopup(auth, provider);
+            console.log('User signed in successfully with Google');
+            const user = result.user;
+            console.log(user);
+            // Access Google Access Token using credential.accessToken
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            if (credential) {
+                const token = credential.accessToken;
+                console.log(token);
+            }
+            if (onSignUp) {
+                onSignUp(true);
+            }
+        } catch (error) {
+            // Handle errors
+            const errorCode = (error as FirebaseError).code;
+            console.error(errorCode);
+            const errorMessage = (error as FirebaseError).message;
+            if (onError) {
+                onError(errorMessage);
+            }
+        }
+    };
+
+    const signUpWithFacebook = async (onSignUp: SignUpCallback, onError: ErrorCallback): Promise<void> => {
+        try {
+            const provider = new FacebookAuthProvider();
+            provider.setCustomParameters({
+                display: 'popup',
+            });
+
+            const result = await signInWithPopup(auth, provider);
+            console.log('User signed in successfully with Facebook');
+            const user = result.user;
+            console.log(user);
+            // Access Facebook-specific information using getAdditionalUserInfo(result)
+            if (onSignUp) {
+                onSignUp(true);
+            }
+        } catch (error) {
+            // Handle errors
+            const errorCode = (error as FirebaseError).code;
+            console.error(errorCode);
+            const errorMessage = (error as FirebaseError).message;
+            if (onError) {
+                onError(errorMessage);
+            }
+        }
+    };
+
+    const signUpWithTwitter = async (onSignUp: SignUpCallback, onError: ErrorCallback): Promise<void> => {
+        try {
+            const provider = new TwitterAuthProvider();
+
+            const result = await signInWithPopup(auth, provider);
+            console.log('User signed in successfully with Twitter');
+            const user = result.user;
+            console.log(user);
+            // Access Twitter-specific information using getAdditionalUserInfo(result)
+            if (onSignUp) {
+                onSignUp(true);
+            }
+        } catch (error) {
+            // Handle errors
+            const errorCode = (error as FirebaseError).code;
+            console.error(errorCode);
+            const errorMessage = (error as FirebaseError).message;
+            if (onError) {
+                onError(errorMessage);
+            }
+        }
+    };
 
     const handleSubmit = async (data: Record<string, string>) => {
         if (onSubmit) {
@@ -162,23 +246,61 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
         <path d="M 11 4 C 7.134 4 4 7.134 4 11 L 4 39 C 4 42.866 7.134 46 11 46 L 39 46 C 42.866 46 46 42.866 46 39 L 46 11 C 46 7.134 42.866 4 39 4 L 11 4 z M 13.085938 13 L 21.023438 13 L 26.660156 21.009766 L 33.5 13 L 36 13 L 27.789062 22.613281 L 37.914062 37 L 29.978516 37 L 23.4375 27.707031 L 15.5 37 L 13 37 L 22.308594 26.103516 L 13.085938 13 z M 16.914062 15 L 31.021484 35 L 34.085938 35 L 19.978516 15 L 16.914062 15 z"></path>
 
 
+
     const LoginButtons = () => (
         <div>
-            <SocialButton provider="Google" action={() => socialLogin('Google')} isLogin icon={<GoogleIcon />} />
-            <SocialButton provider="Facebook" action={() => socialLogin('Facebook')} isLogin icon={<FacebookIcon />} />
-            <SocialButton provider="Twitter" action={() => socialLogin('Twitter')} isLogin icon={<TwitterIcon />} />
-            <SocialButton provider="Instagram" action={() => socialLogin('Instagram')} isLogin icon={<InstagramIcon />} />
+            <SocialButton provider="Google" action={() => handleSocialLogin(signUpWithGoogle)} isLogin icon={<GoogleIcon />} />
+            <SocialButton provider="Facebook" action={() => handleSocialLogin(signUpWithFacebook)} isLogin icon={<FacebookIcon />} />
+            <SocialButton provider="Twitter" action={() => handleSocialLogin(signUpWithTwitter)} isLogin icon={<TwitterIcon />} />
+            {/* <SocialButton provider="Instagram" action={() => socialLogin('Instagram')} isLogin icon={<InstagramIcon />} /> */}
         </div>
     );
 
     const SignUpButtons = () => (
         <div>
-            <SocialButton provider="Google" action={() => socialLogin('Google')} isLogin={false} icon={<GoogleIcon />} />
-            <SocialButton provider="Facebook" action={() => socialLogin('Facebook')} isLogin={false} icon={<FacebookIcon />} />
-            <SocialButton provider="Twitter" action={() => socialLogin('Twitter')} isLogin={false} icon={<TwitterIcon />} />
-            <SocialButton provider="Instagram" action={() => socialLogin('Instagram')} isLogin={false} icon={<InstagramIcon />} />
+            <SocialButton provider="Google" action={() => handleSocialSignUp(signUpWithGoogle)} isLogin={false} icon={<GoogleIcon />} />
+            <SocialButton provider="Facebook" action={() => handleSocialSignUp(signUpWithFacebook)} isLogin={false} icon={<FacebookIcon />} />
+            <SocialButton provider="Twitter" action={() => handleSocialSignUp(signUpWithTwitter)} isLogin={false} icon={<TwitterIcon />} />
+            {/* <SocialButton provider="Instagram" action={() => socialLogin('Instagram')} isLogin={false} icon={<InstagramIcon />} /> */}
         </div>
     );
+
+    const handleSocialLogin = async (socialLoginFunction: any) => {
+        try {
+            await socialLoginFunction(
+                () => {
+                    // On successful login
+                    console.log('Successfully logged in!');
+                },
+                (errorMessage: any) => {
+                    // On login error
+                    console.error(`Error logging in: ${errorMessage}`);
+                }
+            );
+        } catch (error) {
+            // Handle unexpected errors
+            console.error('Unexpected error:', error);
+        }
+    };
+
+    const handleSocialSignUp = async (socialSignUpFunction) => {
+        try {
+            await socialSignUpFunction(
+                () => {
+                    // On successful sign-up
+                    console.log('Successfully signed up!');
+                },
+                (errorMessage: any) => {
+                    // On sign-up error
+                    console.error(`Error signing up: ${errorMessage}`);
+                }
+            );
+        } catch (error) {
+            // Handle unexpected errors
+            console.error('Unexpected error:', error);
+        }
+    };
+
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>
