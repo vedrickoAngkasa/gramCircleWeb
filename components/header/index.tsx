@@ -182,11 +182,6 @@ export default function Header() {
                         return true;
                     }}
                 ></LoginDialog>
-
-
-
-
-
             )}
         </div>
     )

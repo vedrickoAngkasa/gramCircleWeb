@@ -77,9 +77,9 @@ export default function Terms() {
       <p>
         All intellectual property rights in the Service, including but not limited to design, text,
         graphics, logos, icons, images, audio clips, downloads, interfaces, code, software, as well
-        as the selection and arrangement thereof, are owned by chatc.io. You agree not to copy,
+        as the selection and arrangement thereof, are owned by Grame Circle. You agree not to copy,
         distribute, republish, download, display, post, or transmit in any form or by any means any
-        content of chatc.io without our prior written authorization.
+        content of Grame Circle without our prior written authorization.
       </p>
 
       <h2 className="text-xl font-bold my-4">12. User Conduct</h2>
@@ -114,7 +114,7 @@ export default function Terms() {
 
       <h2 className="text-xl font-bold my-4">15. Limitation of Liability</h2>
       <p>
-        In no event shall chatc.io, nor its directors, employees, partners, agents, suppliers, or
+        In no event shall Grame Circle, nor its directors, employees, partners, agents, suppliers, or
         affiliates, be liable for any indirect, incidental, special, consequential or punitive
         damages, including without limitation, loss of profits, data, use, goodwill, or other
         intangible losses, resulting from your access to or use of or inability to access or use the
@@ -123,7 +123,7 @@ export default function Terms() {
 
       <h2 className="text-xl font-bold my-4">16. Indemnification</h2>
       <p>
-        You agree to defend, indemnify and hold harmless chatc.io and its licensee and licensors,
+        You agree to defend, indemnify and hold harmless Grame Circle and its licensee and licensors,
         and their employees, contractors, agents, officers and directors, from and against any and
         all claims, damages, obligations, losses, liabilities, costs or debt, and expenses
         (including but not limited to attorney&apos;s fees), resulting from or arising out of a)
@@ -138,7 +138,7 @@ export default function Terms() {
 
       <h2 className="text-xl font-bold my-4">18. Entire Agreement</h2>
       <p>
-        These Terms constitute the entire agreement between you and chatc.io and supersede any prior
+        These Terms constitute the entire agreement between you and Grame Circle and supersede any prior
         agreements we may have regarding the Service.
       </p>
 

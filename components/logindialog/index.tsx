@@ -64,8 +64,8 @@ const SocialButton: React.FC<SocialButtonProps> = ({ provider, action, isLogin, 
                     xmlns="http://www.w3.org/2000/svg"
                     x="0px"
                     y="0px"
-                    width="25"
-                    height="25"
+                    width="20"
+                    height="20"
                     viewBox="0 0 50 50"
                     className="fill-current transition duration-200 ease-in-out hover:fill-blue"
                 >
@@ -345,7 +345,7 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
                             <div className="mb-2 mt-4 w-full">
                                 <div className="text-center">
                                     <p className="bottom-1 text-xs text-gray-600 text-center">
-                                        I agree to abide by chatc{' '}
+                                        I agree to abide by Gram Circle {' '}
                                         <div
                                             className="inline-block border-b border-gray-500 border-dotted cursor-pointer"
                                             onClick={() => setShowTerms(prev => !prev)}>
