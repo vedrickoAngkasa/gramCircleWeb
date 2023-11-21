@@ -73,45 +73,6 @@ const SocialButton: React.FC<SocialButtonProps> = ({ provider, action, isLogin, 
         </div>
     </Button>);
 
-const signUpWithGoogle = () => {
-    var provider = new GoogleAuthProvider();
-    provider.setCustomParameters({
-        prompt: 'select_account',
-    });
-
-    signInWithPopup(auth, provider)
-        .then(result => {
-            console.log('User signed in successfully');
-            const user = result.user;
-            console.log(user);
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            if (credential) {
-                const token = credential.accessToken;
-                console.log(token);
-            }
-            if (onSignUp) {
-                onSignUp(true);
-            }
-            // The signed-in user info.
-            // IdP data available using getAdditionalUserInfo(result)
-            // ...
-        })
-        .catch(error => {
-            // Handle Errors here.
-            const errorCode = error.code;
-            console.log(errorCode);
-            const errorMessage = error.message;
-            if (onError) {
-                onError(errorMessage);
-            }
-            // The email of the user's account used.
-            const email = error.customData.email;
-            // The AuthCredential type that was used.
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            // ...
-        });
-};
 
 
 
@@ -141,7 +102,6 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
     type ErrorCallback = (errorMessage: string) => void;
 
     const signUpWithGoogle = async (onSignUp: SignUpCallback, onError: ErrorCallback): Promise<void> => {
-        alert('signup with google')
         try {
             const provider = new GoogleAuthProvider();
             provider.setCustomParameters({
@@ -161,14 +121,15 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
             if (onSignUp) {
                 onSignUp(true);
             }
-        } catch (error) {
+        } catch (error: any) {
             // Handle errors
-            const errorCode = (error as FirebaseError).code;
-            console.error(errorCode);
-            const errorMessage = (error as FirebaseError).message;
+            // const errorCode = (error as FirebaseError).code;
+            // console.error(errorCode);
+            // const errorMessage = (error as FirebaseError).message;
             if (onError) {
-                onError(errorMessage);
+                onError(error.message);
             }
+
         }
     };
 
@@ -187,13 +148,13 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
             if (onSignUp) {
                 onSignUp(true);
             }
-        } catch (error) {
+        } catch (error: any) {
             // Handle errors
-            const errorCode = (error as FirebaseError).code;
-            console.error(errorCode);
-            const errorMessage = (error as FirebaseError).message;
+            // const errorCode = (error as FirebaseError).code;
+            // console.error(errorCode);
+            // const errorMessage = (error as FirebaseError).message;
             if (onError) {
-                onError(errorMessage);
+                onError(error.message);
             }
         }
     };
@@ -210,13 +171,13 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
             if (onSignUp) {
                 onSignUp(true);
             }
-        } catch (error) {
+        } catch (error: any) {
             // Handle errors
-            const errorCode = (error as FirebaseError).code;
-            console.error(errorCode);
-            const errorMessage = (error as FirebaseError).message;
+            // const errorCode = (error as FirebaseError).code;
+            // console.error(errorCode);
+            // const errorMessage = (error as FirebaseError).message;
             if (onError) {
-                onError(errorMessage);
+                onError(error.message);
             }
         }
     };
@@ -283,7 +244,7 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
         }
     };
 
-    const handleSocialSignUp = async (socialSignUpFunction) => {
+    const handleSocialSignUp = async (socialSignUpFunction: any) => {
         try {
             await socialSignUpFunction(
                 () => {
