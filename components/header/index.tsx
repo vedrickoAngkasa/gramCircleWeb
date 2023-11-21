@@ -7,6 +7,7 @@ import { getAuth } from 'firebase/auth';
 import { initFirebase } from '@/lib/db'
 import Link from 'next/link'
 import { Button } from '../ui/button';
+import FormDialog from '@/components/formdialog'
 
 import {
     Popover,
@@ -109,7 +110,89 @@ export default function Header() {
                             />
                         </PopoverContent>
                     </Popover>
-                </div>) : (<Button>Login</Button>)}
+                </div>) : (<FormDialog
+                    trigger={
+                        <Button type="button">Login</Button>
+                    }
+                    title="Login to continue..." // Title for the dialog
+                    controls={[
+                        {
+                            label: "Promotion Name",
+                            name: "name",
+                            type: "text",
+                            error: "Promotion Name can not be left empty",
+                        },
+                        {
+                            label: "Incentive",
+                            name: "incentive",
+                            type: "text",
+                            error: "Incentive can not be left empty",
+                        },
+                        {
+                            label: "Comma seperated promo codes",
+                            name: "promoCodes",
+                            type: "textarea",
+                            error: "At least one promo code can not be left empty",
+                        },
+                        {
+                            label: "Terms",
+                            name: "terms",
+                            type: "textarea",
+                            error: "Terms can not be left empty",
+                        },
+                        {
+                            label: "Promo Url Extension",
+                            name: "url",
+                            type: "text",
+                            error: "Url can not be left empty",
+                        },
+                        {
+                            label: "Cancel",
+                            name: "reset",
+                            type: "button",
+                            error: "Please enter a message",
+                        },
+                        {
+                            label: "Next",
+                            name: "submit",
+                            type: "submit",
+                            error: "Please enter a message",
+                        },
+                    ]}
+                    onSubmit={async (formData: any) => {
+                        if (!user || !formData.name || !formData.incentive || !formData.promoCodes || !formData.url) {
+                            return false;
+                        }
+
+                        try {
+                            const promotions = await addPromotion({
+                                ...formData,
+                                uid: user?.uid,
+                                brandId: brand,
+                                products: [],
+                                date: getCurrentDate(),
+                                visits: 0,
+                                redeemed: 0,
+                            });
+                            await setTimeout(() => {
+                            }, 500);
+
+                            // alert('promotion added, now get the product selection')
+                            setProductsInPromotionDialog(true);
+                            return true;
+
+                        } catch (error: any) {
+                            alert(error.message);
+                        }
+                        return true;
+                    }}
+                ></FormDialog>
+
+
+
+
+
+            )}
         </div>
     )
 }
