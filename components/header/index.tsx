@@ -7,7 +7,8 @@ import { getAuth } from 'firebase/auth';
 import { initFirebase } from '@/lib/db'
 import Link from 'next/link'
 import { Button } from '../ui/button';
-import FormDialog from '@/components/formdialog'
+import LoginDialog from '@/components/logindialog'
+import FormDialog from '@/components/formdialog';
 
 import {
     Popover,
@@ -110,9 +111,9 @@ export default function Header() {
                             />
                         </PopoverContent>
                     </Popover>
-                </div>) : (<FormDialog
+                </div>) : (<LoginDialog
                     trigger={
-                        <Button type="button">Login</Button>
+                        <Button type="button" variant="custom">Login</Button>
                     }
                     title="Login to continue..." // Title for the dialog
                     controls={[
@@ -186,7 +187,7 @@ export default function Header() {
                         }
                         return true;
                     }}
-                ></FormDialog>
+                ></LoginDialog>
 
 
 

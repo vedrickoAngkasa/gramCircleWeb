@@ -96,12 +96,12 @@ const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCance
                 {renderControls}
                 <div className="flex justify-end space-x-2 ">
                     {cancelButton && (
-                        <Button type="button" onClick={onCancel} className='mt-4 bg-red border border-red hover:bg-white hover:text-blue hover:border-blue hover:border'>
+                        <Button type="button" onClick={onCancel} variant="custom" className="mt-4">
                             {cancelButton.label || ""}
                         </Button>
                     )}
                     {submitButton && (
-                        <Button type="submit" disabled={busy} className='mt-4'>
+                        <Button type="submit" disabled={busy} className='mt-4' variant="custom">
                             {busy ?
                                 <BeatLoader color={'#ffffff'} size={10} />
                                 : submitButton.label || ""}
