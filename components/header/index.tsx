@@ -174,22 +174,8 @@ export default function Header() {
                         }
 
                         try {
-                            const promotions = await addPromotion({
-                                ...formData,
-                                uid: user?.uid,
-                                brandId: brand,
-                                products: [],
-                                date: getCurrentDate(),
-                                visits: 0,
-                                redeemed: 0,
-                            });
-                            await setTimeout(() => {
-                            }, 500);
-
-                            // alert('promotion added, now get the product selection')
-                            setProductsInPromotionDialog(true);
+                            alert('On login form submit')
                             return true;
-
                         } catch (error: any) {
                             alert(error.message);
                         }

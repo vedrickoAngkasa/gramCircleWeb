@@ -23,9 +23,10 @@ type CustomFormProps = {
     onSubmit: (data: Record<string, string>) => void;
     onCancel: () => void;
     children?: JSX.Element[];
+    buttons?: React.ReactElement | React.ReactElement[]; // Change the type to React.ReactElement or React.ReactElement[]
 };
 
-const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCancel, children }) => {
+const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCancel, children, buttons }) => {
     const [busy, setBusy] = useState(false);
 
     const formSchema = z.object(
@@ -98,20 +99,22 @@ const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCance
                 className="space-y-2"
             >
                 {renderControls}
-                <div className="flex justify-center space-x-2 ">
-                    {cancelButton && (
-                        <Button type="button" onClick={onCancel} className="mt-4">
-                            {cancelButton.label || ""}
-                        </Button>
-                    )}
-                    {submitButton && (
-                        <Button type="submit" disabled={busy} className='mt-4' variant="custom">
-                            {busy ?
-                                <BeatLoader color={'#ffffff'} size={10} />
-                                : submitButton.label || ""}
-                        </Button>
-                    )}
-                </div>
+                {cancelButton && (
+                    <Button type="button" onClick={onCancel} className="mt-4 w-full">
+                        {cancelButton.label || ""}
+                    </Button>
+                )}
+                {submitButton && (
+                    <Button type="submit" disabled={busy} className="mt-4 w-full" variant="custom">
+                        {busy ? <BeatLoader color={'#ffffff'} size={10} /> : submitButton.label || ""}
+                    </Button>
+                )}
+                {buttons && (
+                    <>
+                        {buttons}
+                    </>
+                )}
+
             </form>
             <div>
                 {children}
