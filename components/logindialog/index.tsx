@@ -1,4 +1,4 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState, ReactNode, useEffect } from 'react';
 import {
     Dialog,
     DialogContent,
@@ -17,6 +17,7 @@ import { initFirebase } from '@/lib/db';
 import Privacy from '@/app/privacy';
 import Terms from '@/app/terms';
 import { ModalBox } from '@/components/modal';
+import { SocialButton } from '../socialbuttons/';
 import {
     getAuth,
     signInWithRedirect,
@@ -39,7 +40,7 @@ type FormControl = {
 };
 
 type LoginDialogProps = {
-    trigger?: ReactNode; // Use ReactNode for dynamic content like buttons
+    trigger?: JSX.Element;
     titles: string[];
     loginControls: FormControl[];
     signUpControls: FormControl[];
@@ -49,44 +50,15 @@ type LoginDialogProps = {
     callWhenError?: (value: string) => void;
 };
 
-import { ArrowRight, ArrowLeft, UserCheck } from 'lucide-react';
-interface SocialButtonProps {
-    provider: string;
-    action: () => void;
-    isLogin: boolean;
-    icon: React.ReactNode; // SVG code for the icon
-}
-
-const SocialButton: React.FC<SocialButtonProps> = ({ provider, action, isLogin, icon }) => {
-    return (<Button variant="custom" onClick={action} className="mt-2 w-full">
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div className="svg-container cursor-pointer mr-2">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    x="0px"
-                    y="0px"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 50 50"
-                    className="fill-current transition duration-200 ease-in-out hover:fill-blue"
-                >
-                    {icon}
-                </svg>
-            </div>
-            {isLogin ? `Login with ${provider}` : `Sign Up with ${provider}`}
-        </div>
-    </Button>);
-}
-
-
-
-
 export default function LoginDialog({ trigger, titles, loginControls, signUpControls, onSubmit, children, callWhenDone, callWhenError }: LoginDialogProps) {
     const app = initFirebase();
     const auth = getAuth(app as any);
     const [showTerms, setShowTerms] = useState(false);
     const [showPrivacy, setShowPrivacy] = useState(false);
-
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => {
+        setMounted(true)
+    }, [])
     const onSignUp = (value: boolean) => {
         if (callWhenDone) {
             callWhenDone(false);
@@ -107,6 +79,7 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
 
     type SignUpCallback = (success: boolean) => void;
     type ErrorCallback = (errorMessage: string) => void;
+
 
     const signUpWithGoogle = async (onSignUp: SignUpCallback, onError: ErrorCallback): Promise<void> => {
         try {
@@ -285,7 +258,8 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
             </ModalBox>
         )
     }
-    return (
+
+    return mounted && (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>
                 {trigger}
