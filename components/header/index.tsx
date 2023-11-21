@@ -115,46 +115,54 @@ export default function Header() {
                     trigger={
                         <Button type="button" variant="custom">Login</Button>
                     }
-                    title="Login to continue..." // Title for the dialog
-                    controls={[
+                    titles={["Login to continue...", "Sign Up to Start"]}
+                    loginControls={[
                         {
-                            label: "Promotion Name",
-                            name: "name",
-                            type: "text",
-                            error: "Promotion Name can not be left empty",
+                            label: "Email",
+                            name: "email",
+                            type: "email",
+                            error: "Email can not be left empty",
                         },
                         {
-                            label: "Incentive",
-                            name: "incentive",
-                            type: "text",
-                            error: "Incentive can not be left empty",
+                            label: "Password",
+                            name: "password",
+                            type: "password",
+                            error: "Password can not be left empty",
                         },
                         {
-                            label: "Comma seperated promo codes",
-                            name: "promoCodes",
-                            type: "textarea",
-                            error: "At least one promo code can not be left empty",
-                        },
-                        {
-                            label: "Terms",
-                            name: "terms",
-                            type: "textarea",
-                            error: "Terms can not be left empty",
-                        },
-                        {
-                            label: "Promo Url Extension",
-                            name: "url",
-                            type: "text",
-                            error: "Url can not be left empty",
-                        },
-                        {
-                            label: "Cancel",
-                            name: "reset",
-                            type: "button",
+                            label: "Login with E-mail",
+                            name: "submit",
+                            type: "submit",
                             error: "Please enter a message",
                         },
+                    ]}
+                    signUpControls={[
                         {
-                            label: "Next",
+                            label: "Name",
+                            name: "name",
+                            type: "text",
+                            error: "Name can not be left empty",
+                        },
+                        {
+                            label: "Email",
+                            name: "email",
+                            type: "email",
+                            error: "Email can not be left empty",
+                        },
+                        {
+                            label: "Password",
+                            name: "password",
+                            type: "password",
+                            error: "Password can not be left empty",
+                        },
+                        {
+                            label: "Confirm Password",
+                            name: "confirm",
+                            type: "password",
+                            error: "Password can not be left empty",
+                        },
+                        {
+                            label: "Sign Up with E-mail",
                             name: "submit",
                             type: "submit",
                             error: "Please enter a message",

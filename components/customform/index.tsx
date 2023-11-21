@@ -49,6 +49,10 @@ const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCance
         switch (control.type) {
             case "text":
                 return <Input placeholder={control.label} {...fieldProps} />;
+            case "email":
+                return <Input placeholder={control.label} {...fieldProps} type="email" />;
+            case "password":
+                return <Input placeholder={control.label} {...fieldProps} type="password" />;
             case "textarea":
                 return <Textarea placeholder={control.label} {...fieldProps} />;
             case "hidden":
@@ -94,9 +98,9 @@ const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCance
                 className="space-y-2"
             >
                 {renderControls}
-                <div className="flex justify-end space-x-2 ">
+                <div className="flex justify-center space-x-2 ">
                     {cancelButton && (
-                        <Button type="button" onClick={onCancel} variant="custom" className="mt-4">
+                        <Button type="button" onClick={onCancel} className="mt-4">
                             {cancelButton.label || ""}
                         </Button>
                     )}
