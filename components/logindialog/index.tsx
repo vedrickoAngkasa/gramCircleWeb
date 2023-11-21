@@ -279,10 +279,10 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
                                 <div className="leading-none px-2 py-2 mt-p inline-block text-sm text-center">
                                     {isSignInForm ? (
                                         <>
-                                            <p className="text-black py-4">
+                                            <p className="text-black py-4 text-xs">
                                                 Do not have an account?{' '}
                                                 <a
-                                                    className="text-orange cursor-pointer"
+                                                    className="cursor-pointer text-red"
                                                     onClick={() => setIsSignInForm(prev => !prev)}>
                                                     Sign up now
                                                 </a>
@@ -290,10 +290,10 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
                                         </>
                                     ) : (
                                         <>
-                                            <p className="text-black py-4">
+                                            <p className="text-black py-4 text-xs">
                                                 Already have an account?{' '}
                                                 <a
-                                                    className="text-orange cursor-pointer"
+                                                    className="cursor-pointer text-red"
                                                     onClick={() => setIsSignInForm(prev => !prev)}>
                                                     Login here!
                                                 </a>
@@ -304,7 +304,7 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
                             </div>
                             <div className="mb-2 mt-4 w-full">
                                 <div className="text-center">
-                                    <p className="bottom-1 text-xs text-gray-600 text-center">
+                                    <p className="bottom-1 text-[0.5rem] text-gray-600 text-center">
                                         I agree to abide by Gram Circle {' '}
                                         <div
                                             className="inline-block border-b border-gray-500 border-dotted cursor-pointer"

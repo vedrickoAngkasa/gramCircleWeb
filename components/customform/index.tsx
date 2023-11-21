@@ -110,9 +110,14 @@ const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCance
                     </Button>
                 )}
                 {buttons && (
-                    <>
+                    <div className="">
+                        <div className="flex items-center">
+                            <div className="flex-1 h-0.5 bg-gray-300"></div>
+                            <div className="mx-4 text-gray-500">or</div>
+                            <div className="flex-1 h-0.5 bg-gray-300"></div>
+                        </div>
                         {buttons}
-                    </>
+                    </div>
                 )}
             </form>
             {children}
