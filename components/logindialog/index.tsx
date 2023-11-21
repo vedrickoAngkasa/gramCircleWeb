@@ -13,6 +13,9 @@ import CustomForm from '@/components/customform';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button"
 import { initFirebase } from '@/lib/db';
+import Privacy from '@/app/privacy';
+import Terms from '@/app/terms';
+import { ModalBox } from '@/components/modal';
 import {
     getAuth,
     signInWithRedirect,
@@ -79,6 +82,8 @@ const SocialButton: React.FC<SocialButtonProps> = ({ provider, action, isLogin, 
 export default function LoginDialog({ trigger, titles, loginControls, signUpControls, onSubmit, children, callWhenDone, callWhenError }: LoginDialogProps) {
     const app = initFirebase();
     const auth = getAuth(app as any);
+    const [showTerms, setShowTerms] = useState(false);
+    const [showPrivacy, setShowPrivacy] = useState(false);
 
     const onSignUp = (value: boolean) => {
         if (callWhenDone) {
@@ -262,6 +267,38 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
         }
     };
 
+    if (showTerms) {
+        return (
+            <ModalBox
+                header="Terms of Services"
+                showModal={showTerms}
+                onClose={() => setShowTerms(prev => !prev)}
+                style={{
+                    width: '70%',
+                    height: '90vh',
+                    overflowY: 'auto',
+                    padding: '20px',
+                }}>
+                <Terms />
+            </ModalBox>
+        )
+    }
+    if (showPrivacy) {
+        return (
+            <ModalBox
+                header="Privacy Policy"
+                showModal={showPrivacy}
+                onClose={() => setShowPrivacy(prev => !prev)}
+                style={{
+                    width: '70%',
+                    height: '90vh',
+                    overflowY: 'auto',
+                    padding: '20px',
+                }}>
+                <Privacy />
+            </ModalBox>
+        )
+    }
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>
@@ -305,6 +342,25 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
                                     )}
                                 </div>
                             </div>
+                            <div className="mb-2 mt-4 w-full">
+                                <div className="text-center">
+                                    <p className="bottom-1 text-xs text-gray-600 text-center">
+                                        I agree to abide by chatc{' '}
+                                        <div
+                                            className="inline-block border-b border-gray-500 border-dotted cursor-pointer"
+                                            onClick={() => setShowTerms(prev => !prev)}>
+                                            Terms of Service
+                                        </div>{' '}
+                                        and its{' '}
+                                        <div
+                                            className="inline-block border-b border-gray-500 border-dotted cursor-pointer"
+                                            onClick={() => setShowPrivacy(prev => !prev)}>
+                                            Privacy Policy
+                                        </div>
+                                    </p>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
