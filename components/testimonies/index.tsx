@@ -51,9 +51,8 @@ export function Testimonies() {
             {testimonies.data.map((_, index) => (
               <button
                 key={index}
-                className={`w-3 h-3 rounded-full mx-1 focus:outline-none ${
-                  index === activeIndex ? 'bg-blue-500' : 'bg-blue-100'
-                }`}
+                className={`w-3 h-3 rounded-full mx-1 focus:outline-none ${index === activeIndex ? 'bg-blue-500' : 'bg-blue-100'
+                  }`}
                 onClick={() => handleDotClick(index)}></button>
             ))}
           </div>

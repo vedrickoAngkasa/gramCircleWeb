@@ -6,6 +6,8 @@ import { PlusSquare, LogOut, UserCircle2, Settings } from 'lucide-react';
 import { getAuth } from 'firebase/auth';
 import { initFirebase } from '@/lib/db'
 import Link from 'next/link'
+
+// import Button from '@/components/button';
 import { Button } from '../ui/button';
 import LoginDialog from '@/components/logindialog'
 import FormDialog from '@/components/formdialog';
@@ -89,12 +91,11 @@ export default function Header() {
         );
     };
     return (
-        <div className="bg-gray-0 w-full flex justify-between items-center py-10 border-1 border-black px-10">
-            <div className="flex items-center font-logo text-xl text-black">
-                <Link href="/admin/brands">www.gramcircle.ai</Link>
+        <div className="bg-blue w-full flex justify-between items-center py-4 border-1 border-black px-4">
+            <div className="flex items-center font-logo text-xl text-white">
+                <a href="/admin/brands">www.gramcircle.ai</a>
             </div>
             {user ? (
-
                 <div className="flex items-center ">
                     <Popover>
                         <PopoverTrigger asChild>
@@ -111,77 +112,80 @@ export default function Header() {
                             />
                         </PopoverContent>
                     </Popover>
-                </div>) : (<LoginDialog
-                    trigger={
-                        <Button type="button" variant="custom">Login</Button>
-                    }
-                    titles={["Login to continue...", "Sign Up to Start"]}
-                    loginControls={[
-                        {
-                            label: "Email",
-                            name: "email",
-                            type: "email",
-                            error: "Email can not be left empty",
-                        },
-                        {
-                            label: "Password",
-                            name: "password",
-                            type: "password",
-                            error: "Password can not be left empty",
-                        },
-                        {
-                            label: "Login with E-mail",
-                            name: "submit",
-                            type: "submit",
-                            error: "Please enter a message",
-                        },
-                    ]}
-                    signUpControls={[
-                        {
-                            label: "Name",
-                            name: "name",
-                            type: "text",
-                            error: "Name can not be left empty",
-                        },
-                        {
-                            label: "Email",
-                            name: "email",
-                            type: "email",
-                            error: "Email can not be left empty",
-                        },
-                        {
-                            label: "Password",
-                            name: "password",
-                            type: "password",
-                            error: "Password can not be left empty",
-                        },
-                        {
-                            label: "Confirm Password",
-                            name: "confirm",
-                            type: "password",
-                            error: "Password can not be left empty",
-                        },
-                        {
-                            label: "Sign Up with E-mail",
-                            name: "submit",
-                            type: "submit",
-                            error: "Please enter a message",
-                        },
-                    ]}
-                    onSubmit={async (formData: any) => {
-                        if (!user || !formData.name || !formData.incentive || !formData.promoCodes || !formData.url) {
-                            return false;
+                </div>) : (
+                <div>
+                    <LoginDialog
+                        trigger={
+                            <Button type="button" variant="custom">Login</Button>
                         }
+                        titles={["Login to continue...", "Sign Up to Start"]}
+                        loginControls={[
+                            {
+                                label: "Email",
+                                name: "email",
+                                type: "email",
+                                error: "Email can not be left empty",
+                            },
+                            {
+                                label: "Password",
+                                name: "password",
+                                type: "password",
+                                error: "Password can not be left empty",
+                            },
+                            {
+                                label: "Login with E-mail",
+                                name: "submit",
+                                type: "submit",
+                                error: "Please enter a message",
+                            },
+                        ]}
+                        signUpControls={[
+                            {
+                                label: "Name",
+                                name: "name",
+                                type: "text",
+                                error: "Name can not be left empty",
+                            },
+                            {
+                                label: "Email",
+                                name: "email",
+                                type: "email",
+                                error: "Email can not be left empty",
+                            },
+                            {
+                                label: "Password",
+                                name: "password",
+                                type: "password",
+                                error: "Password can not be left empty",
+                            },
+                            {
+                                label: "Confirm Password",
+                                name: "confirm",
+                                type: "password",
+                                error: "Password can not be left empty",
+                            },
+                            {
+                                label: "Sign Up with E-mail",
+                                name: "submit",
+                                type: "submit",
+                                error: "Please enter a message",
+                            },
+                        ]}
+                        onSubmit={async (formData: any) => {
+                            if (!user || !formData.name || !formData.incentive || !formData.promoCodes || !formData.url) {
+                                return false;
+                            }
 
-                        try {
-                            alert('On login form submit')
+                            try {
+                                alert('On login form submit')
+                                return true;
+                            } catch (error: any) {
+                                alert(error.message);
+                            }
                             return true;
-                        } catch (error: any) {
-                            alert(error.message);
-                        }
-                        return true;
-                    }}
-                ></LoginDialog>
+                        }}
+                    />
+                </div>
             )}
         </div>
     )

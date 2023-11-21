@@ -114,11 +114,8 @@ const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCance
                         {buttons}
                     </>
                 )}
-
             </form>
-            <div>
-                {children}
-            </div>
+            {children}
         </Form>
     );
 };

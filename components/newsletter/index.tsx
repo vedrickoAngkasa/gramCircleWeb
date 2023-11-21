@@ -1,6 +1,6 @@
 import Section from '@/components/section';
 import Image from 'next/image';
-import { Button } from '../ui/button';
+import { Button } from '@/components/button';
 
 export default function NewsLetter() {
 
