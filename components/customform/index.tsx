@@ -91,8 +91,7 @@ const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCance
                     e.preventDefault(); // Prevent the default form submission
                     setBusy(true);
                     const valid = await form.trigger();
-                    // if (valid) 
-                    {
+                    if (valid) {
                         const ret = await onSubmit(form.getValues());
                     }
                     setBusy(false);

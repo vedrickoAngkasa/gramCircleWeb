@@ -3,6 +3,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { PlusSquare, LogOut, UserCircle2, Settings, Mail } from 'lucide-react';
+import toast, { Toaster } from 'react-hot-toast';
 
 import { initFirebase } from '@/lib/db'
 import Link from 'next/link'
@@ -36,7 +37,7 @@ const auth = getAuth(app as any);
 
 
 export default function Header() {
-    const [loginError, setLoginError] = useState('')
+
     const [user, loading] = useAuthState(auth);
     const logout1 = async () => {
         await auth.signOut()
@@ -71,7 +72,7 @@ export default function Header() {
                             objectPosition="center"
                         />
                     ) : (
-                        <UserCircle2 size={50} />
+                        <UserCircle2 size={50} style={{ color: 'white' }} />
                     )}
                 </div>
                 {user && <p className="mt-2 font-semibold mb-4">{user.email}</p>}
@@ -81,7 +82,7 @@ export default function Header() {
                         className="flex items-center cursor-pointer hover:bg-gray-100 p-2 rounded"
                         onClick={() => alert('Profile Clicked')}
                     >
-                        <UserCircle2 size={24} className="mr-2" />
+                        <UserCircle2 size={24} className="bg-red border border-red text-white hover:bg-white hover:text-blue hover:border-blue hover:border mr-2" />
                         <span>Profile</span>
                     </li>
                     <li
@@ -112,7 +113,7 @@ export default function Header() {
                 <div className="flex items-center ">
                     <Popover>
                         <PopoverTrigger asChild>
-                            <UserCircle2 size={28} className='cursor-pointer' />
+                            <UserCircle2 size={28} className="cursor-pointer text-white hover:text-red mr-2" />
                         </PopoverTrigger>
                         <PopoverContent className="w-80">
                             <LogoutPopup
@@ -128,7 +129,6 @@ export default function Header() {
                 </div>) : (
                 <div>
                     <LoginDialog
-                        error={loginError}
                         trigger={
                             <Button type="button" variant="custom">Login</Button>
                         }

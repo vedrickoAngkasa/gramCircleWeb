@@ -1,4 +1,5 @@
 import React, { useState, ReactNode, useEffect } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import {
     Dialog,
     DialogContent,
@@ -84,12 +85,12 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
     type ErrorCallback = (errorMessage: string) => void;
 
 
-    const signInWithEmail = async (onSignUp: SignUpCallback, onError: ErrorCallback): Promise<void> => {
-        alert('signInWithEmail')
-    }
-    const signUpWithEmail = async (onSignUp: SignUpCallback, onError: ErrorCallback): Promise<void> => {
-        alert('signUpWithEmail')
-    }
+    // const signInWithEmail = async (onSignUp: SignUpCallback, onError: ErrorCallback): Promise<void> => {
+    //     alert('signInWithEmail')
+    // }
+    // const signUpWithEmail = async (onSignUp: SignUpCallback, onError: ErrorCallback): Promise<void> => {
+    //     alert('signUpWithEmail')
+    // }
     const signUpWithGoogle = async (onSignUp: SignUpCallback, onError: ErrorCallback): Promise<void> => {
         try {
             const provider = new GoogleAuthProvider();
@@ -171,14 +172,24 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
         }
     };
 
-    const handleSubmit = async (data: Record<string, string>) => {
-        if (onSubmit) {
-            const ret = await onSubmit(data);
-            if (ret)
-                setOpen(false);
-            return;
+    const handleSubmit = async (formData: Record<string, string>) => {
+        try {
+            if (isSignInForm) {
+                await signInWithEmailAndPassword(auth, formData.email, formData.password);
+                toast('Login successful with email and password');
+            } else {
+                alert(JSON.stringify(formData));
+                await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+                toast('Account successfully created with email and password');
+            }
+            return true;
+        } catch (error: any) {
+            // alert(error.message);
+            console.log(error.message);
+            toast.error(error.message);
+            return false;
         }
-        setOpen(false);
+        return true;
     }
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [open, setOpen] = useState(false);
@@ -186,7 +197,7 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
     const LoginButtons = () => (
         <div>
             {/* <SocialButton height={45} width={45} provider="Email" action={() => handleSocialLogin(signInWithEmail)} isLogin icon={<EmailIcon />} /> */}
-            <SocialButton provider="Email" action={() => handleSocialLogin(signInWithEmail)} isLogin icon={<Mail size={20} />} />
+            <SocialButton provider="Email" action={() => handleSocialLogin(null)} isLogin icon={<Mail size={20} />} />
             <div className="mb-2 mt-4">
                 <div className="flex items-center">
                     <div className="flex-1 h-0.5 bg-gray-300"></div>
@@ -205,7 +216,7 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
 
     const SignUpButtons = () => (
         <div>
-            <SocialButton provider="Email" action={() => handleSocialLogin(signInWithEmail)} isLogin={false} icon={<Mail size={20} />} />
+            <SocialButton provider="Email" action={() => handleSocialLogin(null)} isLogin={false} icon={<Mail size={20} />} />
             <div className="mt-4 mb-2">
                 <div className="flex items-center">
                     <div className="flex-1 h-0.5 bg-gray-300"></div>
@@ -229,6 +240,7 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
                 () => {
                     // On successful login
                     console.log('Successfully logged in!');
+                    return false;
                 },
                 (errorMessage: any) => {
                     // On login error
