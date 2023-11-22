@@ -1,9 +1,9 @@
 "use client"
 import Image from 'next/image';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { PlusSquare, LogOut, UserCircle2, Settings } from 'lucide-react';
-import { getAuth } from 'firebase/auth';
+import { PlusSquare, LogOut, UserCircle2, Settings, Mail } from 'lucide-react';
+
 import { initFirebase } from '@/lib/db'
 import Link from 'next/link'
 
@@ -11,6 +11,18 @@ import Link from 'next/link'
 import { Button } from '../ui/button';
 import LoginDialog from '@/components/logindialog'
 import FormDialog from '@/components/formdialog';
+import {
+    getAuth,
+    signInWithRedirect,
+    GoogleAuthProvider,
+    signInWithPopup,
+    signInWithEmailAndPassword,
+    FacebookAuthProvider,
+    TwitterAuthProvider,
+    createUserWithEmailAndPassword,
+    sendEmailVerification,
+    updateProfile,
+} from 'firebase/auth';
 
 import {
     Popover,
@@ -24,6 +36,7 @@ const auth = getAuth(app as any);
 
 
 export default function Header() {
+    const [loginError, setLoginError] = useState('')
     const [user, loading] = useAuthState(auth);
     const logout1 = async () => {
         await auth.signOut()
@@ -115,10 +128,11 @@ export default function Header() {
                 </div>) : (
                 <div>
                     <LoginDialog
+                        error={loginError}
                         trigger={
                             <Button type="button" variant="custom">Login</Button>
                         }
-                        titles={["Login to continue...", "Sign Up to Start"]}
+                        titles={["Login to continue...", "Sign up to start..."]}
                         loginControls={[
                             {
                                 label: "Email",
@@ -132,12 +146,12 @@ export default function Header() {
                                 type: "password",
                                 error: "Password can not be left empty",
                             },
-                            {
-                                label: "Login with E-mail",
-                                name: "submit",
-                                type: "submit",
-                                error: "Please enter a message",
-                            },
+                            // {
+                            //     label: "Login with E-mail",
+                            //     name: "submit",
+                            //     type: "submit",
+                            //     error: "Please enter a message",
+                            // },
                         ]}
                         signUpControls={[
                             {
@@ -164,26 +178,26 @@ export default function Header() {
                                 type: "password",
                                 error: "Password can not be left empty",
                             },
-                            {
-                                label: "Sign Up with E-mail",
-                                name: "submit",
-                                type: "submit",
-                                error: "Please enter a message",
-                            },
+                            // {
+                            //     label: "Sign Up with E-mail",
+                            //     name: "submit",
+                            //     type: "submit",
+                            //     error: "Please enter a message",
+                            // },
                         ]}
-                        onSubmit={async (formData: any) => {
-                            if (!user || !formData.name || !formData.incentive || !formData.promoCodes || !formData.url) {
-                                return false;
-                            }
-
-                            try {
-                                alert('On login form submit')
-                                return true;
-                            } catch (error: any) {
-                                alert(error.message);
-                            }
-                            return true;
-                        }}
+                    // onSubmit={async (formData: any) => {
+                    //     console.log(formData);
+                    //     try {
+                    //         await signInWithEmailAndPassword(auth, formData.email, formData.password);
+                    //         return true;
+                    //     } catch (error: any) {
+                    //         // alert(error.message);
+                    //         console.log(error.message);
+                    //         setLoginError(error.message);
+                    //         return false;
+                    //     }
+                    //     return true;
+                    // }}
                     />
                 </div>
             )}

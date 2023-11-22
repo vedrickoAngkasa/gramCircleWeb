@@ -16,6 +16,7 @@ type FormControl = {
     type: ControlType | string;
     error?: string;
     value?: string;
+    icon?: React.ReactElement | null;
 };
 
 type CustomFormProps = {
@@ -109,16 +110,7 @@ const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCance
                         {busy ? <BeatLoader color={'#ffffff'} size={10} /> : submitButton.label || ""}
                     </Button>
                 )}
-                {buttons && (
-                    <div className="">
-                        <div className="flex items-center">
-                            <div className="flex-1 h-0.5 bg-gray-300"></div>
-                            <div className="mx-4 text-gray-500">or</div>
-                            <div className="flex-1 h-0.5 bg-gray-300"></div>
-                        </div>
-                        {buttons}
-                    </div>
-                )}
+                {buttons && (buttons)}
             </form>
             {children}
         </Form>

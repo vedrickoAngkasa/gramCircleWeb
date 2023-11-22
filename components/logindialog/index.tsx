@@ -8,7 +8,8 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import { GoogleIcon, FacebookIcon, TwitterIcon } from '@/app/icons';
+import { GoogleIcon, FacebookIcon, EmailIcon, TwitterIcon } from '@/app/icons';
+import { Mail, Twitter, Facebook, Dribbble } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import CustomForm from '@/components/customform';
 import { Input } from "@/components/ui/input";
@@ -48,14 +49,16 @@ type LoginDialogProps = {
     children?: JSX.Element[];
     callWhenDone?: (value: boolean) => void;
     callWhenError?: (value: string) => void;
+    error?: string;
 };
 
-export default function LoginDialog({ trigger, titles, loginControls, signUpControls, onSubmit, children, callWhenDone, callWhenError }: LoginDialogProps) {
+export default function LoginDialog({ trigger, titles, loginControls, signUpControls, onSubmit, children, callWhenDone, callWhenError, error }: LoginDialogProps) {
     const app = initFirebase();
     const auth = getAuth(app as any);
     const [showTerms, setShowTerms] = useState(false);
     const [showPrivacy, setShowPrivacy] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const [loginError, setLoginError] = useState(error);
     useEffect(() => {
         setMounted(true)
     }, [])
@@ -81,6 +84,12 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
     type ErrorCallback = (errorMessage: string) => void;
 
 
+    const signInWithEmail = async (onSignUp: SignUpCallback, onError: ErrorCallback): Promise<void> => {
+        alert('signInWithEmail')
+    }
+    const signUpWithEmail = async (onSignUp: SignUpCallback, onError: ErrorCallback): Promise<void> => {
+        alert('signUpWithEmail')
+    }
     const signUpWithGoogle = async (onSignUp: SignUpCallback, onError: ErrorCallback): Promise<void> => {
         try {
             const provider = new GoogleAuthProvider();
@@ -176,14 +185,38 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
 
     const LoginButtons = () => (
         <div>
+            {/* <SocialButton height={45} width={45} provider="Email" action={() => handleSocialLogin(signInWithEmail)} isLogin icon={<EmailIcon />} /> */}
+            <SocialButton provider="Email" action={() => handleSocialLogin(signInWithEmail)} isLogin icon={<Mail size={20} />} />
+            <div className="mb-2 mt-4">
+                <div className="flex items-center">
+                    <div className="flex-1 h-0.5 bg-gray-300"></div>
+                    <div className="mx-4 text-gray-500">or</div>
+                    <div className="flex-1 h-0.5 bg-gray-300"></div>
+                </div>
+            </div>
             <SocialButton provider="Google" action={() => handleSocialLogin(signUpWithGoogle)} isLogin icon={<GoogleIcon />} />
             <SocialButton provider="Facebook" action={() => handleSocialLogin(signUpWithFacebook)} isLogin icon={<FacebookIcon />} />
             <SocialButton provider="Twitter" action={() => handleSocialLogin(signUpWithTwitter)} isLogin icon={<TwitterIcon />} />
+            {/* <SocialButton provider="Google" action={() => handleSocialLogin(signUpWithGoogle)} isLogin icon={<Dribbble size={18} />} />
+            <SocialButton provider="Facebook" action={() => handleSocialLogin(signUpWithFacebook)} isLogin icon={<Facebook size={18} />} />
+            <SocialButton provider="Twitter" action={() => handleSocialLogin(signUpWithTwitter)} isLogin icon={<Twitter size={18} />} /> */}
         </div>
     );
 
     const SignUpButtons = () => (
         <div>
+            <SocialButton provider="Email" action={() => handleSocialLogin(signInWithEmail)} isLogin={false} icon={<Mail size={20} />} />
+            <div className="mt-4 mb-2">
+                <div className="flex items-center">
+                    <div className="flex-1 h-0.5 bg-gray-300"></div>
+                    <div className="mx-4 text-gray-500">or</div>
+                    <div className="flex-1 h-0.5 bg-gray-300"></div>
+                </div>
+            </div>
+            {/* <SocialButton provider="Google" action={() => handleSocialLogin(signUpWithGoogle)} isLogin={false} icon={<Dribbble size={18} />} />
+            <SocialButton provider="Facebook" action={() => handleSocialLogin(signUpWithFacebook)} isLogin={false} icon={<Facebook size={18} />} />
+            <SocialButton provider="Twitter" action={() => handleSocialLogin(signUpWithTwitter)} isLogin={false} icon={<Twitter size={18} />} /> */}
+
             <SocialButton provider="Google" action={() => handleSocialSignUp(signUpWithGoogle)} isLogin={false} icon={<GoogleIcon />} />
             <SocialButton provider="Facebook" action={() => handleSocialSignUp(signUpWithFacebook)} isLogin={false} icon={<FacebookIcon />} />
             <SocialButton provider="Twitter" action={() => handleSocialSignUp(signUpWithTwitter)} isLogin={false} icon={<TwitterIcon />} />
@@ -269,9 +302,11 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
                     <DialogTitle></DialogTitle>
                 </DialogHeader>
                 <div className="flex flex-col items-center">
+                    {loginError && (<p className="rounded-sm resize-none w-full px-6 mb-4  py-2 bg-red text-center text-white text-sm font-light">{loginError}</p>)}
                     <h1 className="font-semibold text-3xl tracking-tight text-black-200">
                         {isSignInForm ? titles[0] : titles[1]}
                     </h1>
+
                     <div className="w-full flex-1 mt-8 ">
                         <div className="mx-auto max-w-xs">
                             <CustomForm buttons={isSignInForm ? <LoginButtons /> : <SignUpButtons />} formControls={isSignInForm ? loginControls : signUpControls} onSubmit={handleSubmit} onCancel={() => { setOpen(false) }} >{children}</CustomForm>

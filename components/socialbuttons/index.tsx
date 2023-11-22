@@ -1,33 +1,25 @@
 import { Button } from "../ui/button";
+
 interface SocialButtonProps {
     provider: string;
     action: () => void;
     isLogin: boolean;
-    icon: React.ReactNode; // SVG code for the icon
+    icon: React.ReactNode; // SVG code for the icon    
+    height?: number;
+    width?: number;
 }
 
-export const SocialButton: React.FC<SocialButtonProps> = ({ provider, action, isLogin, icon }) => {
+export const SocialButton: React.FC<SocialButtonProps> = ({ provider, action, isLogin, icon, height = 20, width = 20 }) => {
     return (
         <Button variant="custom" onClick={action} className="mt-2 w-full">
-            <div className="flex items-center">
+            <div className="flex">
                 <div className="svg-container cursor-pointer mr-4">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        x="0px"
-                        y="0px"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 50 50"
-                        className="fill-current transition duration-200 ease-in-out hover:fill-blue"
-                    >
-                        {icon}
-                    </svg>
+                    {icon}
                 </div>
-                <div>
+                <div className="flex-1">
                     {isLogin ? `Login with ${provider}` : `Sign Up with ${provider}`}
                 </div>
             </div>
         </Button>
     );
 };
-
