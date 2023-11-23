@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { PlusSquare, LogOut, UserCircle2, Settings, Mail } from 'lucide-react';
+import { PlusSquare, LogOut, UserCircle2, UserCircle, Settings, Mail } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
 import CircularImage from '@/components/circleimage'
 import { initFirebase } from '@/lib/db'
@@ -12,18 +12,7 @@ import Link from 'next/link'
 import { Button } from '../ui/button';
 import LoginDialog from '@/components/logindialog'
 import FormDialog from '@/components/formdialog';
-import {
-    getAuth,
-    signInWithRedirect,
-    GoogleAuthProvider,
-    signInWithPopup,
-    signInWithEmailAndPassword,
-    FacebookAuthProvider,
-    TwitterAuthProvider,
-    createUserWithEmailAndPassword,
-    sendEmailVerification,
-    updateProfile,
-} from 'firebase/auth';
+import { getAuth, } from 'firebase/auth';
 
 import {
     Popover,
@@ -65,7 +54,9 @@ export default function Header() {
                 <div className="relative w-16 h-16 mx-auto rounded-full">
                     {user && user.photoURL ? (
                         <CircularImage src={user.photoURL} alt="Image Alt Text" size={60} border="blue" />) : (
-                        <UserCircle2 size={50} style={{ color: 'white' }} />
+                        <div className="mt-6">
+                            <UserCircle size={55} className='text-blue' />
+                        </div>
                     )}
                 </div>
                 {user && <p className="mt-2 font-semibold mb-4">{user.email}</p>}
@@ -107,10 +98,10 @@ export default function Header() {
                             {user && user.photoURL ? (
                                 <CircularImage src={user.photoURL} alt="Image Alt Text" size={30} />
                             ) : (
-                                <UserCircle2 size={50} style={{ color: 'white' }} />
+                                <UserCircle size={30} style={{ color: 'white' }} />
                             )}
                         </div>
-                        {/* <UserCircle2 size={28} className="cursor-pointer text-white hover:text-red mr-2" /> */}
+
                     </PopoverTrigger>
                     <PopoverContent className="w-80 mt-4 mr-4 border border-black ">
                         <LogoutPopup
@@ -173,28 +164,10 @@ export default function Header() {
                             label: "Confirm Password",
                             name: "confirm",
                             type: "password",
-                            error: "Password can not be left empty",
+                            error: "Confirm password can not be left empty",
                         },
-                        // {
-                        //     label: "Sign Up with E-mail",
-                        //     name: "submit",
-                        //     type: "submit",
-                        //     error: "Please enter a message",
-                        // },
                     ]}
-                // onSubmit={async (formData: any) => {
-                //     console.log(formData);
-                //     try {
-                //         await signInWithEmailAndPassword(auth, formData.email, formData.password);
-                //         return true;
-                //     } catch (error: any) {
-                //         // alert(error.message);
-                //         console.log(error.message);
-                //         setLoginError(error.message);
-                //         return false;
-                //     }
-                //     return true;
-                // }}
+
                 />
             </div>
         )}

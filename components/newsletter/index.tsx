@@ -1,6 +1,6 @@
 import Section from '@/components/section';
 import Image from 'next/image';
-import { Button } from '@/components/button';
+import { Button } from '../ui/button';
 
 export default function NewsLetter() {
 
@@ -19,7 +19,7 @@ export default function NewsLetter() {
           placeholder="Enter your email"
 
         />
-        <Button className="px-12 mx-4" >Subscribe</Button>
+        <Button variant="custom" className="px-12 mx-4" >Subscribe</Button>
       </div>
     </Section>
   );

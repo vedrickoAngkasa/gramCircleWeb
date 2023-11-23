@@ -11,15 +11,12 @@ import { Footer } from '@/components/footer';
 export default function Home() {
   return (
     <div>
-      {/* <Section id="whatisit" header="What is Get More Reviews" subheader={"Welcome to Gram Circle, where cutting-edge AI technology transforms product reviews into your secret weapon for e-commerce success. Our platform empowers you to effortlessly build a vector database of competitor product reviews, helping your customers write compelling reviews with just a few keywords"}>
+      <Section id="whatisit" header="POWER TO INFLUENCE" subheader={"Welcome to GramCircle, the innovative SaaS platform redefining influencer marketing. The Problem: Connecting brands with influencers is often complicated and time-consuming. Our Solution: A user-friendly platform where brands and influencers seamlessly collaborate."}>
         <p></p>
       </Section>
-      <Section id="boost" header="Boost Your Sales" subheader={"Increase your sales and conversion rates with authentic, user-generated reviews. Our AI-driven solution has helped countless e-commerce sellers supercharge their businesses."}>
-        <p></p>
-      </Section> */}
       <Testimonies />
-      {/* <NewsLetter /> */}
+      <NewsLetter />
       <Footer />
-    </div>
+    </div >
   )
 }
