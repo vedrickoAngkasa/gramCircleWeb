@@ -18,8 +18,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <div className='h-screen w-screen bg-white'>
+      <body className={`${inter.className} overflow-y-hidden`}>
+        <div className='h-screen w-screen bg-blue'>
           <Header />
           {children}
         </div></body>

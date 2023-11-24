@@ -88,7 +88,7 @@ export default function Header() {
             </div>
         );
     };
-    return (<div className="bg-blue w-full flex justify-between items-center border-1 border-red px-8 py-4">
+    return (<div className="bg-blue w-full flex justify-between items-center border-b border-1 border-white px-8 py-4">
         <a className="text-xl text-white" href="/admin/brands">www.gramcircle.ai</a>
         {user ? (
             <div className="flex items-center">
