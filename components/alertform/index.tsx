@@ -49,7 +49,7 @@ type CustomFormProps = {
     controls: FormControl[];
     trigger: JSX.Element;
     onSubmit: (data: Record<string, string>) => void;
-    onBack?: () => void;
+    onBack?: (() => void) | null;
     title: string;
 };
 
