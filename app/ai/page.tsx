@@ -75,7 +75,7 @@ export default function CampaignAccordion() {
     }
     return (
         <div className="flex items-center justify-center p-6 border-2 border-white">
-            <CustomForm onSubmit={handleSubmit} onCancel={() => alert('cancel')} controls={controls} buttons={[<Button type='submit' variant="custom" className="mt-2 w-full">Create Campaign</Button>, <Button variant="custom" onClick={() => alert("cancel")} className="mt-2 w-full">Cancel</Button>]
+            <CustomForm onSubmit={handleSubmit} onCancel={() => alert('cancel')} controls={controls} buttons={[<Button key="create" type='submit' variant="custom" className="mt-2 w-full">Create Campaign</Button>, <Button key="cancel" variant="custom" onClick={() => alert("cancel")} className="mt-2 w-full">Cancel</Button>]
             } />
         </div >
     );
