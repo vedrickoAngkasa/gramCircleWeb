@@ -4,14 +4,14 @@ import React, { useState } from 'react';
 
 import { Button } from "@/components/ui/button"
 
-import {AlertForm} from "@/components/alertform";
-  
-  
+import { AlertForm } from "@/components/alertform";
+
+
 export default function BrandDeal() {
     const [step, setStep] = useState(0);
-    const [steps, setSteps]=useState([{
+    const [steps, setSteps] = useState([{
         title: 'Add Campaign',
-        controls:[{
+        controls: [{
             name: "campaign",
             label: "Campaign Name",
             type: "text",
@@ -26,20 +26,20 @@ export default function BrandDeal() {
             label: "Collobration Details",
             type: "textarea",
         },
-        // {
-        //     name: "start",
-        //     label: "Start Date",
-        //     type: "date",
-        // },
-        // {
-        //     name: "end",
-        //     label: "End Date",
-        //     type: "date",
-        // },
-    ]
-    },{
+            // {
+            //     name: "start",
+            //     label: "Start Date",
+            //     type: "date",
+            // },
+            // {
+            //     name: "end",
+            //     label: "End Date",
+            //     type: "date",
+            // },
+        ]
+    }, {
         title: 'Add Engagement',
-        controls:[{
+        controls: [{
             name: "channel",
             label: "Select One Channel",
             type: "text",
@@ -56,23 +56,23 @@ export default function BrandDeal() {
         },]
     }])
 
-    const handleBack = () =>{
-        if( step >= 1 ) setStep(prev=>prev-1);
+    const handleBack = () => {
+        if (step >= 1) setStep(prev => prev - 1);
     }
 
-    const handleSubmit = (formData: any)=>{
+    const handleSubmit = (formData: any) => {
         alert(JSON.stringify(formData))
-        if( step < steps.length-1){
-            setStep((prev)=> prev+1);
+        if (step < steps.length - 1) {
+            setStep((prev) => prev + 1);
         }
     }
-        return (
+    return (
         <div className="flex bg-red-500 text-green-400">
-        <AlertForm 
-            trigger={<Button variant="custom">Create First Deal</Button>} 
-            controls={steps[step].controls} title={`${steps[step].title}`} 
-            onSubmit={handleSubmit}
-            onBack={(step ? handleBack : null)}
+            <AlertForm
+                trigger={<Button variant="custom">Create First Deal</Button>}
+                controls={steps[step].controls} title={`${steps[step].title}`}
+                onSubmit={handleSubmit}
+                onBack={(step ? handleBack : null)}
             />
         </div >
     )
