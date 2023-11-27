@@ -107,30 +107,30 @@ export default function CampaignAccordion() {
         </div >
     );
 
-    return (
-        <div className="flex items-center justify-center h-screen text-white ">
-            <Accordion type="single" collapsible className="w-full max-w-md border m-4">
-                {campaigns.map((option, index) => (
-                    <AccordionItem key={index} value={`item-${index}`}>
-                        <AccordionTrigger className=" p-4 cursor-pointer">
-                            {option.Title}
-                        </AccordionTrigger>
-                        <AccordionContent className=" p-4">
-                            <p className="text-white">
-                                <strong>Platform:</strong> {option.Platform}
-                            </p>
-                            <p className="text-white">
-                                <strong>About the Promotion:</strong>{" "}
-                                {option.Details["About the Promotion"]}
-                            </p>
-                            <p className="text-white">
-                                <strong>Collaboration Details:</strong>{" "}
-                                {option.Details["Collaboration Details"]}
-                            </p>
-                        </AccordionContent>
-                    </AccordionItem>
-                ))}
-            </Accordion>
-        </div>
-    );
+    // return (
+    //     <div className="flex items-center justify-center h-screen text-white ">
+    //         <Accordion type="single" collapsible className="w-full max-w-md border m-4">
+    //             {campaigns.map((option, index) => (
+    //                 <AccordionItem key={index} value={`item-${index}`}>
+    //                     <AccordionTrigger className=" p-4 cursor-pointer">
+    //                         {option.Title}
+    //                     </AccordionTrigger>
+    //                     <AccordionContent className=" p-4">
+    //                         <p className="text-white">
+    //                             <strong>Platform:</strong> {option.Platform}
+    //                         </p>
+    //                         <p className="text-white">
+    //                             <strong>About the Promotion:</strong>{" "}
+    //                             {option.Details["About the Promotion"]}
+    //                         </p>
+    //                         <p className="text-white">
+    //                             <strong>Collaboration Details:</strong>{" "}
+    //                             {option.Details["Collaboration Details"]}
+    //                         </p>
+    //                     </AccordionContent>
+    //                 </AccordionItem>
+    //             ))}
+    //         </Accordion>
+    //     </div>
+    // );
 }
