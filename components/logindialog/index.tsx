@@ -329,7 +329,7 @@ export default function LoginDialog({ trigger, titles, loginControls, signUpCont
 
                         <div className="w-full flex-1 mt-8 ">
                             <div className="mx-auto max-w-xs">
-                                <CustomForm buttons={isSignInForm ? <LoginButtons /> : <SignUpButtons />} formControls={isSignInForm ? loginControls : signUpControls} onSubmit={handleSubmit} onCancel={() => { setOpen(false) }} >{children}</CustomForm>
+                                <CustomForm buttons={isSignInForm ? <LoginButtons /> : <SignUpButtons />} controls={isSignInForm ? loginControls : signUpControls} onSubmit={handleSubmit} onCancel={() => { setOpen(false) }} >{children}</CustomForm>
                                 <div className="w-full flex-1 text-center">
                                     <div className="leading-none px-2 py-2 mt-p inline-block text-sm text-center">
                                         {isSignInForm ? (

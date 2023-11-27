@@ -19,21 +19,24 @@ type FormControl = {
     error?: string;
     value?: string;
     icon?: React.ReactElement | null;
+
 };
 
 type CustomFormProps = {
-    formControls: FormControl[];
+    controls: FormControl[];
     onSubmit: (data: Record<string, string>) => void;
-    onCancel: () => void;
+    onCancel?: () => void;
+    onBack?: (() => void) | null;
     children?: JSX.Element[];
     buttons?: React.ReactElement | React.ReactElement[]; // Change the type to React.ReactElement or React.ReactElement[]
+    title?: string;
 };
 
-const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCancel, children, buttons }) => {
+const CustomForm: React.FC<CustomFormProps> = ({ controls, onSubmit, onCancel, children, buttons, onBack, title }) => {
     const [busy, setBusy] = useState(false);
 
     const formSchema = z.object(
-        formControls.reduce((schema, control) => {
+        controls.reduce((schema, control) => {
             schema[control.name] = z.string().min(2, {
                 message: control.error,
             });
@@ -43,7 +46,7 @@ const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCance
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: formControls.reduce((values, control) => {
+        defaultValues: controls.reduce((values, control) => {
             values[control.name] = control.value || "";
             return values;
         }, {} as Record<string, string>),
@@ -66,7 +69,7 @@ const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCance
         }
     };
 
-    const renderControls = formControls
+    const renderControls = controls
         .filter((control) => control.type !== "button" && control.type !== "submit")
         .map((control) => (
             <FormField
@@ -82,13 +85,12 @@ const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCance
             />
         ));
 
-    const submitButton = formControls.find((control) => control.type === "submit");
-    const cancelButton = formControls.find((control) => control.type === "button");
+    const submitButton = controls.find((control) => control.type === "submit");
+    const cancelButton = controls.find((control) => control.type === "button");
 
     return (
         <Form {...form} >
             <form
-
                 onSubmit={async (e) => {
                     e.preventDefault(); // Prevent the default form submission
                     setBusy(true);
@@ -101,7 +103,18 @@ const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCance
                 className="space-y-2"
             >
                 {renderControls}
-                {cancelButton && (
+                <div className="pt-4 items-center space-x-2 w-full">
+                    {/* {onBack && <Button variant="custom" type="button" onClick={() => onBack()}>
+                        Back
+                    </Button>}
+                    <Button variant="custom" type="button" onClick={() => setOpen(false)}>
+                        Cancel
+                    </Button> */}
+                    {/* <Button type="submit" disabled={busy} className="mt-4 w-full" variant="custom">
+                        {busy ? <BeatLoader color={'#ffffff'} size={10} /> : title || ""}
+                    </Button> */}
+                </div>
+                {/* {cancelButton && (
                     <Button type="button" onClick={onCancel} className="mt-4 w-full">
                         {cancelButton.label || ""}
                     </Button>
@@ -110,7 +123,7 @@ const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCance
                     <Button type="submit" disabled={busy} className="mt-4 w-full" variant="custom">
                         {busy ? <BeatLoader color={'#ffffff'} size={10} /> : submitButton.label || ""}
                     </Button>
-                )}
+                )} */}
                 {buttons && (buttons)}
             </form>
             {children}

@@ -49,7 +49,7 @@ export default function FormDialog({ trigger, title, controls, onSubmit, childre
                 <DialogHeader>
                     <DialogTitle>{title}</DialogTitle>
                 </DialogHeader>
-                <CustomForm formControls={controls} onSubmit={handleSubmit} onCancel={() => { setOpen(false) }} >{children}</CustomForm>
+                <CustomForm controls={controls} onSubmit={handleSubmit} onCancel={() => { setOpen(false) }} >{children}</CustomForm>
             </DialogContent>
         </Dialog>
     );

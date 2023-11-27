@@ -1,5 +1,7 @@
 "use client"
+import { AlertForm } from "@/components/alertform";
 import CustomForm from "@/components/customform";
+import { Button } from "@/components/ui/button";
 import {
     Accordion,
     AccordionContent,
@@ -9,9 +11,6 @@ import {
 
 export default function CampaignAccordion() {
 
-    const handleSubmit = async () => {
-        alert('submit form');
-    }
     const campaignOptions = [
         {
             Title: "Promotion Option 1",
@@ -45,39 +44,42 @@ export default function CampaignAccordion() {
         },
     ];
 
-    return (<div className="flex items-center justify-center h-screen text-white w-full">
-        <CustomForm formControls={
-            [
-                {
-                    label: "Prompt",
-                    name: "prompt",
-                    type: "textarea",
-                    error: "Prompt can not be left empty",
-                    value: "Create three options of an influencer engagement barter campaign for a brand Hearty Soups."
-                },
-                {
-                    label: "About",
-                    name: "about",
-                    type: "textarea",
-                    error: "About can not be left empty",
-                    value: "It is a restaurant in Singapore and the goal is to drive awareness for the brand in exchange for a $10 voucher."
-                },
-                {
-                    label: "Fields",
-                    name: "fields",
-                    type: "text",
-                    error: "Fields can not be left empty",
-                    value: `"About the Promotion", "Collaboration Details", "Facebook", "Instagram", "Google Reviews"`
-                },
-                {
-                    label: "Generate Campaign",
-                    name: "submit",
-                    type: "submit",
-                    error: "Please enter a message",
-                },
+    const controls = [
+        {
+            label: "Prompt",
+            name: "prompt",
+            type: "textarea",
+            error: "Prompt can not be left empty",
+            value: "Create three options of an influencer engagement barter campaign for a brand Hearty Soups."
+        },
+        {
+            label: "About",
+            name: "about",
+            type: "textarea",
+            error: "About can not be left empty",
+            value: "It is a restaurant in Singapore and the goal is to drive awareness for the brand in exchange for a $10 voucher."
+        },
+        {
+            label: "Fields",
+            name: "fields",
+            type: "text",
+            error: "Fields can not be left empty",
+            value: `"About the Promotion", "Collaboration Details", "Facebook", "Instagram", "Google Reviews"`
+        },
 
-            ]} onSubmit={handleSubmit} onCancel={() => { alert('cancel') }} >{ }</CustomForm>
-    </div >)
+    ]
+    const handleSubmit = async (formData: any) => {
+        alert(JSON.stringify(formData))
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        return true;
+    }
+    return (
+        <div className="flex items-center justify-center p-6 border-2 border-white">
+            <CustomForm onSubmit={handleSubmit} onCancel={() => alert('cancel')} controls={controls} buttons={[<Button type='submit' variant="custom" className="mt-2 w-full">Create Campaign</Button>, <Button variant="custom" onClick={() => alert("cancel")} className="mt-2 w-full">Cancel</Button>]
+            } />
+        </div >
+    );
+
     return (
         <div className="flex items-center justify-center h-screen text-white ">
             <Accordion type="single" collapsible className="w-full max-w-md border m-4">
