@@ -30,10 +30,11 @@ type CustomFormProps = {
     children?: JSX.Element[];
     buttons?: React.ReactElement | React.ReactElement[]; // Change the type to React.ReactElement or React.ReactElement[]
     title?: string;
+    busy?: React.ReactElement;
 };
 
-const CustomForm: React.FC<CustomFormProps> = ({ controls, onSubmit, onCancel, children, buttons, onBack, title }) => {
-    const [busy, setBusy] = useState(false);
+const CustomForm: React.FC<CustomFormProps> = ({ controls, onSubmit, onCancel, children, buttons, onBack, busy }) => {
+    const [isBusy, setIsBusy] = useState(false);
 
     const formSchema = z.object(
         controls.reduce((schema, control) => {
@@ -93,38 +94,19 @@ const CustomForm: React.FC<CustomFormProps> = ({ controls, onSubmit, onCancel, c
             <form
                 onSubmit={async (e) => {
                     e.preventDefault(); // Prevent the default form submission
-                    setBusy(true);
+                    setIsBusy(true);
                     const valid = await form.trigger();
                     if (valid) {
                         const ret = await onSubmit(form.getValues());
                     }
-                    setBusy(false);
+                    setIsBusy(false);
                 }}
                 className="space-y-2"
             >
                 {renderControls}
-                <div className="pt-4 items-center space-x-2 w-full">
-                    {/* {onBack && <Button variant="custom" type="button" onClick={() => onBack()}>
-                        Back
-                    </Button>}
-                    <Button variant="custom" type="button" onClick={() => setOpen(false)}>
-                        Cancel
-                    </Button> */}
-                    {/* <Button type="submit" disabled={busy} className="mt-4 w-full" variant="custom">
-                        {busy ? <BeatLoader color={'#ffffff'} size={10} /> : title || ""}
-                    </Button> */}
+                <div className="items-center justify-center">
+                    {isBusy && busy ? busy : buttons && (buttons)}
                 </div>
-                {/* {cancelButton && (
-                    <Button type="button" onClick={onCancel} className="mt-4 w-full">
-                        {cancelButton.label || ""}
-                    </Button>
-                )}
-                {submitButton && (
-                    <Button type="submit" disabled={busy} className="mt-4 w-full" variant="custom">
-                        {busy ? <BeatLoader color={'#ffffff'} size={10} /> : submitButton.label || ""}
-                    </Button>
-                )} */}
-                {buttons && (buttons)}
             </form>
             {children}
         </Form>
