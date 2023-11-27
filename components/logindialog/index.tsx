@@ -21,7 +21,7 @@ import Privacy from '@/app/privacy';
 import Terms from '@/app/terms';
 import { ModalBox } from '@/components/modal';
 import { SocialButton } from '../socialbuttons/';
-import FloatingInput from '../floatinginput';
+
 import {
     getAuth,
     signInWithRedirect,

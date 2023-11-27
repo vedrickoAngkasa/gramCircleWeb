@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea"; // Ensure the correct import
 import { BeatLoader } from 'react-spinners';
 import { FloatingInput } from "@/components/floatinginput";
+import { FloatingText } from "../floatingtext";
 
 type ControlType = "text" | "email" | "textarea" | "submit" | "checkbox" | "hidden";
 
@@ -57,7 +58,7 @@ const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCance
             case "password":
                 return <FloatingInput placeholder={control.label} {...fieldProps} type="password" />;
             case "textarea":
-                return <Textarea placeholder={control.label} {...fieldProps} />;
+                return <FloatingText placeholder={control.label} {...fieldProps} />;
             case "hidden":
                 return <Input type="hidden" name={control.name} value={control.value || ""} />;
             default:

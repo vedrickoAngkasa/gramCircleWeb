@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Button } from '@/components/button';
+import { Button } from "@/components/ui/button"
 import { hero } from '@/data/hero';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 // import { LoginModal } from '@/components/modal/login';

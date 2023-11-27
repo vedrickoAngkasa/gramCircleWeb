@@ -80,13 +80,12 @@ const CustomForm: React.FC<CustomFormProps> = ({ formControls, onSubmit, onCance
     return (
         <Form {...form} >
             <form
-
                 onSubmit={async (e) => {
                     e.preventDefault(); // Prevent the default form submission
                     setBusy(true);
                     const valid = await form.trigger();
-                    // if (valid) 
-                    {
+                    alert(valid);
+                    if (valid) {
                         const ret = await onSubmit(form.getValues());
                     }
                     setBusy(false);
